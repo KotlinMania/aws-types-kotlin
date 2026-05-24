@@ -1,4 +1,4 @@
-// port-lint: source src/region.rs
+// port-lint: source region.rs
 package io.github.kotlinmania.awstypes
 
 import kotlin.test.Test
@@ -11,6 +11,7 @@ class RegionTest {
         val region = Region.new("us-east-1")
 
         assertEquals("us-east-1", region.asString())
+        assertEquals("us-east-1", region.asRef())
         assertEquals("us-east-1", region.toString())
         assertEquals(region, Region.fromStatic("us-east-1"))
         assertNotEquals(region, Region.new("us-west-2"))
@@ -21,6 +22,7 @@ class RegionTest {
         val region = Region.new("eu-west-1")
 
         assertEquals("eu-west-1", SigningRegion.from(region).asString())
+        assertEquals("eu-west-1", SigningRegion.from(region).asRef())
         assertEquals(SigningRegion.fromStatic("eu-west-1"), SigningRegion.from("eu-west-1"))
     }
 
@@ -29,10 +31,15 @@ class RegionTest {
         val region = Region.new("ap-south-1")
 
         assertEquals("ap-south-1", SigningRegionSet.from(region).asString())
+        assertEquals("ap-south-1", SigningRegionSet.from(region).asRef())
         assertEquals("ap-south-1", SigningRegionSet.from("ap-south-1").asString())
         assertEquals(
             "us-east-1,us-west-2,eu-central-1",
             SigningRegionSet.fromIterable(listOf("us-east-1", "us-west-2", "eu-central-1")).asString(),
+        )
+        assertEquals(
+            "us-east-1,us-west-2",
+            SigningRegionSet.fromIterator(listOf("us-east-1", "us-west-2").iterator()).asString(),
         )
         assertEquals("", SigningRegionSet.fromIterable(emptyList()).asString())
     }

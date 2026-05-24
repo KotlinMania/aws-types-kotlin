@@ -1,4 +1,4 @@
-// port-lint: source src/origin.rs
+// port-lint: source origin.rs
 package io.github.kotlinmania.awstypes
 
 /*
