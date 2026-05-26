@@ -1,4 +1,4 @@
-// port-lint: source src/region.rs
+// port-lint: source region.rs
 package io.github.kotlinmania.awstypes
 
 /*
@@ -21,6 +21,9 @@ public class Region private constructor(private val value: String) {
     /** Returns the string form of this region. */
     public fun asString(): String = value
 
+    /** Returns the string form of this region. */
+    public fun asRef(): String = value
+
     override fun toString(): String = value
 
     override fun equals(other: Any?): Boolean = other is Region && value == other.value
@@ -40,6 +43,9 @@ public class Region private constructor(private val value: String) {
 public class SigningRegion private constructor(private val value: String) {
     /** Returns the string form of this signing region. */
     public fun asString(): String = value
+
+    /** Returns the string form of this signing region. */
+    public fun asRef(): String = value
 
     override fun toString(): String = value
 
@@ -68,6 +74,9 @@ public class SigningRegionSet private constructor(private val value: String) {
     /** Returns the string form of this signing region set. */
     public fun asString(): String = value
 
+    /** Returns the string form of this signing region set. */
+    public fun asRef(): String = value
+
     override fun toString(): String = value
 
     override fun equals(other: Any?): Boolean = other is SigningRegionSet && value == other.value
@@ -83,6 +92,24 @@ public class SigningRegionSet private constructor(private val value: String) {
 
         /** Creates a [SigningRegionSet] by joining regions with commas. */
         public fun fromIterable(regions: Iterable<String>): SigningRegionSet =
-            SigningRegionSet(regions.joinToString(","))
+            fromIterator(regions.iterator())
+
+        /** Creates a [SigningRegionSet] by joining regions from an iterator with commas. */
+        public fun fromIterator(regions: Iterator<String>): SigningRegionSet {
+            val value = StringBuilder()
+
+            if (regions.hasNext()) {
+                value.append(regions.next())
+            }
+
+            // If more than one region is present in the iterator, separate remaining regions
+            // with commas.
+            while (regions.hasNext()) {
+                value.append(',')
+                value.append(regions.next())
+            }
+
+            return SigningRegionSet(value.toString())
+        }
     }
 }
