@@ -17,7 +17,9 @@ package io.github.kotlinmania.awstypes
  *
  * See http://docs.aws.amazon.com/general/latest/gr/rande.html for information on AWS regions.
  */
-public class Region private constructor(private val value: String) {
+public class Region private constructor(
+    private val value: String,
+) {
     /** Returns the string form of this region. */
     public fun asString(): String = value
 
@@ -40,7 +42,9 @@ public class Region private constructor(private val value: String) {
 }
 
 /** The region to use when signing requests. */
-public class SigningRegion private constructor(private val value: String) {
+public class SigningRegion private constructor(
+    private val value: String,
+) {
     /** Returns the string form of this signing region. */
     public fun asString(): String = value
 
@@ -70,7 +74,9 @@ public class SigningRegion private constructor(private val value: String) {
  *
  * Generally, user code will not need to interact with [SigningRegionSet]. See [Region].
  */
-public class SigningRegionSet private constructor(private val value: String) {
+public class SigningRegionSet private constructor(
+    private val value: String,
+) {
     /** Returns the string form of this signing region set. */
     public fun asString(): String = value
 

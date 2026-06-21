@@ -61,14 +61,15 @@ public enum class OsFamily {
          *
          * Mirrors upstream `impl From<&str> for OsFamily`.
          */
-        public fun fromString(value: String): OsFamily = when (value) {
-            "windows" -> Windows
-            "macos" -> Macos
-            "ios" -> Ios
-            "linux" -> Linux
-            "android" -> Android
-            else -> Other
-        }
+        public fun fromString(value: String): OsFamily =
+            when (value) {
+                "windows" -> Windows
+                "macos" -> Macos
+                "ios" -> Ios
+                "linux" -> Linux
+                "android" -> Android
+                else -> Other
+            }
     }
 }
 
@@ -81,8 +82,9 @@ public enum class OsFamily {
 internal expect val currentOsFamily: OsFamily
 
 /** Constant build metadata for this artifact. */
-public val BUILD_METADATA: BuildMetadata = BuildMetadata(
-    kotlinVersion = KOTLIN_VERSION,
-    corePkgVersion = CORE_PKG_VERSION,
-    osFamily = OsFamily.fromEnv(),
-)
+public val BUILD_METADATA: BuildMetadata =
+    BuildMetadata(
+        kotlinVersion = KOTLIN_VERSION,
+        corePkgVersion = CORE_PKG_VERSION,
+        osFamily = OsFamily.fromEnv(),
+    )

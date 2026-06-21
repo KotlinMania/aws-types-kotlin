@@ -14,23 +14,29 @@ package io.github.kotlinmania.awstypes
  * Upstream marks this type non-exhaustive, so callers outside this module must construct it
  * through the factory functions on the companion object rather than the primary constructor.
  */
-public class Origin private constructor(internal val inner: Inner) {
-    override fun toString(): String = when (inner) {
-        Inner.Imds -> "IMDS"
-        is Inner.ProfileFile -> when (inner.kind) {
-            Kind.Shared -> "shared profile file"
-            Kind.Service -> "service profile file"
+public class Origin private constructor(
+    internal val inner: Inner,
+) {
+    override fun toString(): String =
+        when (inner) {
+            Inner.Imds -> "IMDS"
+            is Inner.ProfileFile ->
+                when (inner.kind) {
+                    Kind.Shared -> "shared profile file"
+                    Kind.Service -> "service profile file"
+                }
+            is Inner.EnvironmentVariable ->
+                when (inner.kind) {
+                    Kind.Shared -> "shared environment variable"
+                    Kind.Service -> "service environment variable"
+                }
+            is Inner.Programmatic ->
+                when (inner.kind) {
+                    Kind.Shared -> "shared client"
+                    Kind.Service -> "service client"
+                }
+            is Inner.Unknown -> "unknown"
         }
-        is Inner.EnvironmentVariable -> when (inner.kind) {
-            Kind.Shared -> "shared environment variable"
-            Kind.Service -> "service environment variable"
-        }
-        is Inner.Programmatic -> when (inner.kind) {
-            Kind.Shared -> "shared client"
-            Kind.Service -> "service client"
-        }
-        is Inner.Unknown -> "unknown"
-    }
 
     /**
      * Returns true if the origin was set programmatically i.e. on an `SdkConfig` or service
@@ -91,13 +97,23 @@ public class Origin private constructor(internal val inner: Inner) {
 
 internal sealed class Inner {
     internal data object Imds : Inner()
-    internal data class ProfileFile(val kind: Kind) : Inner()
-    internal data class EnvironmentVariable(val kind: Kind) : Inner()
-    internal data class Programmatic(val kind: Kind) : Inner()
+
+    internal data class ProfileFile(
+        val kind: Kind,
+    ) : Inner()
+
+    internal data class EnvironmentVariable(
+        val kind: Kind,
+    ) : Inner()
+
+    internal data class Programmatic(
+        val kind: Kind,
+    ) : Inner()
 
     // Unknown is like NaN. It's not equal to anything, not even itself.
     internal class Unknown : Inner() {
         override fun equals(other: Any?): Boolean = false
+
         override fun hashCode(): Int = 0
     }
 
@@ -112,25 +128,29 @@ internal sealed class Inner {
             // IMDS is the lowest priority
             Imds -> -1
             // ProfileFile is the second-lowest priority
-            is ProfileFile -> when (other) {
-                is Imds -> 1
-                is ProfileFile -> kind.compareTo(other.kind)
-                else -> -1
-            }
+            is ProfileFile ->
+                when (other) {
+                    is Imds -> 1
+                    is ProfileFile -> kind.compareTo(other.kind)
+                    else -> -1
+                }
             // EnvironmentVariable is the second-highest priority
-            is EnvironmentVariable -> when (other) {
-                is Imds, is ProfileFile -> 1
-                is EnvironmentVariable -> kind.compareTo(other.kind)
-                else -> -1
-            }
+            is EnvironmentVariable ->
+                when (other) {
+                    is Imds, is ProfileFile -> 1
+                    is EnvironmentVariable -> kind.compareTo(other.kind)
+                    else -> -1
+                }
             // Programmatic is the highest priority
-            is Programmatic -> when (other) {
-                is Imds, is EnvironmentVariable, is ProfileFile -> 1
-                is Programmatic -> kind.compareTo(other.kind)
-                else -> error(
-                    "When we have something higher than programmatic we can update this case.",
-                )
-            }
+            is Programmatic ->
+                when (other) {
+                    is Imds, is EnvironmentVariable, is ProfileFile -> 1
+                    is Programmatic -> kind.compareTo(other.kind)
+                    else ->
+                        error(
+                            "When we have something higher than programmatic we can update this case.",
+                        )
+                }
             is Unknown -> error("unreachable: filtered by isUnknown check above")
         }
     }

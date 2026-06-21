@@ -10,15 +10,16 @@ class OriginTest {
     @Test
     fun testPrecedenceLowToHigh() {
         // Lowest to highest precedence
-        val list = listOf(
-            Origin.imds(),
-            Origin.sharedProfileFile(),
-            Origin.serviceProfileFile(),
-            Origin.sharedEnvironmentVariable(),
-            Origin.serviceEnvironmentVariable(),
-            Origin.sharedConfig(),
-            Origin.serviceConfig(),
-        )
+        val list =
+            listOf(
+                Origin.imds(),
+                Origin.sharedProfileFile(),
+                Origin.serviceProfileFile(),
+                Origin.sharedEnvironmentVariable(),
+                Origin.serviceEnvironmentVariable(),
+                Origin.sharedConfig(),
+                Origin.serviceConfig(),
+            )
 
         for (i in 0 until list.size - 1) {
             val a = list[i]
@@ -30,15 +31,16 @@ class OriginTest {
     @Test
     fun testPrecedenceHighToLow() {
         // Highest to lowest precedence
-        val list = listOf(
-            Origin.serviceConfig(),
-            Origin.sharedConfig(),
-            Origin.serviceEnvironmentVariable(),
-            Origin.sharedEnvironmentVariable(),
-            Origin.serviceProfileFile(),
-            Origin.sharedProfileFile(),
-            Origin.imds(),
-        )
+        val list =
+            listOf(
+                Origin.serviceConfig(),
+                Origin.sharedConfig(),
+                Origin.serviceEnvironmentVariable(),
+                Origin.sharedEnvironmentVariable(),
+                Origin.serviceProfileFile(),
+                Origin.sharedProfileFile(),
+                Origin.imds(),
+            )
 
         for (i in 0 until list.size - 1) {
             val a = list[i]
