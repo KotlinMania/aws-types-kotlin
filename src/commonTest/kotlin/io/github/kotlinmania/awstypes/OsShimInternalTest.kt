@@ -14,21 +14,21 @@ import kotlin.test.assertNull
 class OsShimInternalTest {
     @Test
     fun envWorks() {
-        val env = Env.fromSlice("FOO" to "BAR")
+        val env = Env.fromSlice(mapOf("FOO" to "BAR"))
         assertEquals("BAR", env.get("FOO"))
         assertNull(env.get("OTHER"))
     }
 
     @Test
     fun envFromSlice() {
-        val env = Env.fromSlice("foo" to "bar")
+        val env = Env.fromSlice(mapOf("foo" to "bar"))
         assertEquals("bar", env.get("foo"))
         assertNull(env.get("bar"))
     }
 
     @Test
     fun envFromListAndMap() {
-        val env = Env.fromList(listOf("k1" to "v1", "k2" to "v2"))
+        val env = Env.fromMap(mapOf("k1" to "v1", "k2" to "v2"))
         assertEquals("v1", env.get("k1"))
         assertEquals("v2", env.get("k2"))
         assertNull(env.get("k3"))
@@ -36,7 +36,7 @@ class OsShimInternalTest {
 
     @Test
     fun testFsMock() {
-        val fs = Fs.fromSlice("foo" to "bar")
+        val fs = Fs.fromSlice(mapOf("foo" to "bar"))
         assertEquals("bar", fs.readToEnd("foo").decodeToString())
         assertEquals("bar", fs.readUtf8("foo"))
 
