@@ -65,30 +65,52 @@ public class Origin private constructor(
 
     public companion object {
         /** The origin is unknown. */
-        public fun unknown(): Origin = Origin(Inner.Unknown())
+        public val UNKNOWN: Origin = Origin(Inner.Unknown())
 
         /** Set with IMDS. */
-        public fun imds(): Origin = Origin(Inner.Imds)
+        public val IMDS: Origin = Origin(Inner.Imds)
 
         /** Set on a shared config struct. */
-        public fun sharedConfig(): Origin = Origin(Inner.Programmatic(Kind.Shared))
+        public val SHARED_CONFIG: Origin = Origin(Inner.Programmatic(Kind.Shared))
 
         /** Set on a service config struct. */
-        public fun serviceConfig(): Origin = Origin(Inner.Programmatic(Kind.Service))
+        public val SERVICE_CONFIG: Origin = Origin(Inner.Programmatic(Kind.Service))
 
-        /** Set by an environment variable. */
-        public fun sharedEnvironmentVariable(): Origin =
-            Origin(Inner.EnvironmentVariable(Kind.Shared))
+        /** Set by a shared environment variable. */
+        public val SHARED_ENVIRONMENT_VARIABLE: Origin = Origin(Inner.EnvironmentVariable(Kind.Shared))
 
         /** Set by a service-specific environment variable. */
-        public fun serviceEnvironmentVariable(): Origin =
-            Origin(Inner.EnvironmentVariable(Kind.Service))
+        public val SERVICE_ENVIRONMENT_VARIABLE: Origin = Origin(Inner.EnvironmentVariable(Kind.Service))
 
-        /** Set in a profile file. */
-        public fun sharedProfileFile(): Origin = Origin(Inner.ProfileFile(Kind.Shared))
+        /** Set in a shared profile file. */
+        public val SHARED_PROFILE_FILE: Origin = Origin(Inner.ProfileFile(Kind.Shared))
 
         /** Service-specific, set in a profile file. */
-        public fun serviceProfileFile(): Origin = Origin(Inner.ProfileFile(Kind.Service))
+        public val SERVICE_PROFILE_FILE: Origin = Origin(Inner.ProfileFile(Kind.Service))
+
+        /** The origin is unknown. */
+        public fun unknown(): Origin = UNKNOWN
+
+        /** Set with IMDS. */
+        public fun imds(): Origin = IMDS
+
+        /** Set on a shared config struct. */
+        public fun sharedConfig(): Origin = SHARED_CONFIG
+
+        /** Set on a service config struct. */
+        public fun serviceConfig(): Origin = SERVICE_CONFIG
+
+        /** Set by an environment variable. */
+        public fun sharedEnvironmentVariable(): Origin = SHARED_ENVIRONMENT_VARIABLE
+
+        /** Set by a service-specific environment variable. */
+        public fun serviceEnvironmentVariable(): Origin = SERVICE_ENVIRONMENT_VARIABLE
+
+        /** Set in a profile file. */
+        public fun sharedProfileFile(): Origin = SHARED_PROFILE_FILE
+
+        /** Service-specific, set in a profile file. */
+        public fun serviceProfileFile(): Origin = SERVICE_PROFILE_FILE
 
         /** Default origin — equivalent to upstream's `impl Default for Origin`. */
         public fun default(): Origin = unknown()
