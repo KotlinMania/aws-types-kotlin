@@ -4,14 +4,14 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 1/9 (11.1%)
-- **Function parity:** 15/155 matched (target 23) — 9.7%
-- **Class/type parity:** 3/29 matched (target 9) — 10.3%
-- **Combined symbol parity:** 18/184 matched (target 32) — 9.8%
-- **Average inline-code cosine:** 0.67 (function body across 1 matched files)
-- **Average documentation cosine:** 0.81 (doc text across 1 matched files)
+- **Files Present:** 9/9 (100.0%)
+- **Function parity:** 100/117 matched (target 232) — 85.5%
+- **Class/type parity:** 21/31 matched (target 63) — 67.7%
+- **Combined symbol parity:** 121/148 matched (target 295) — 81.8%
+- **Average inline-code cosine:** 0.45 (function body across 9 matched files)
+- **Average documentation cosine:** 0.65 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
-- **Critical Issues:** 0 files with <0.60 function similarity
+- **Critical Issues:** 7 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
@@ -29,20 +29,107 @@ Every matched file is listed below with function and type symbol parity.
 
 ### 1. origin
 
-- **Target:** `awstypes.Origin [PROVENANCE-FALLBACK]`
-- **Similarity:** 0.67
+- **Target:** `awstypes.Origin`
+- **Similarity:** 0.45
 - **Dependents:** 1
-- **Priority Score:** 1032103.3
+- **Priority Score:** 1032105.6
 - **Functions:** 15/18 matched (target 23)
 - **Missing functions:** `fmt`, `eq`, `partial_cmp`
 - **Types:** 3/3 matched (target 9)
 - **Missing types:** _none_
 - **Tests:** 4/4 matched
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `src/origin.rs` vs expected `origin.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `src/origin.rs` vs expected `origin.rs`
-- **Proposed provenance header:** `// port-lint: source origin.rs` (current: `// port-lint: source src/origin.rs`)
-- **Proposed provenance header:** `// port-lint: source origin.rs` (current: `// port-lint: source src/origin.rs`)
-- **Lint issues:** 2
+
+### 2. region
+
+- **Target:** `awstypes.Region`
+- **Similarity:** 0.49
+- **Dependents:** 1
+- **Priority Score:** 1031005.1
+- **Functions:** 4/6 matched (target 27)
+- **Missing functions:** `fmt`, `from_iter`
+- **Types:** 3/4 matched
+- **Missing types:** `Storer`
+
+### 3. app_name
+
+- **Target:** `awstypes.AppName`
+- **Similarity:** 0.31
+- **Dependents:** 1
+- **Priority Score:** 1030906.9
+- **Functions:** 4/6 matched (target 13)
+- **Missing functions:** `fmt`, `valid_character`
+- **Types:** 2/3 matched
+- **Missing types:** `Storer`
+- **Tests:** 2/2 matched
+
+### 4. sdk_config
+
+- **Target:** `awstypes.SdkConfig`
+- **Similarity:** 0.74
+- **Dependents:** 1
+- **Priority Score:** 1005202.6
+- **Functions:** 50/50 matched (target 95)
+- **Missing functions:** _none_
+- **Types:** 2/2 matched (target 19)
+- **Missing types:** _none_
+
+### 5. service_config
+
+- **Target:** `awstypes.ServiceConfig`
+- **Similarity:** 0.26
+- **Dependents:** 0
+- **Priority Score:** 71407.4
+- **Functions:** 5/9 matched (target 8)
+- **Missing functions:** `fmt`, `missing_service_id`, `missing_profile`, `missing_env`
+- **Types:** 2/5 matched (target 4)
+- **Missing types:** `ErrorKind`, `Error`, `LoadServiceConfig`
+
+### 6. os_shim_internal
+
+- **Target:** `awstypes.OsShimInternal`
+- **Similarity:** 0.36
+- **Dependents:** 0
+- **Priority Score:** 51706.4
+- **Functions:** 10/13 matched (target 23)
+- **Missing functions:** `default`, `from_raw_map`, `from`
+- **Types:** 2/4 matched
+- **Missing types:** `Inner`, `Fake`
+- **Tests:** 3/3 matched
+
+### 7. endpoint_config
+
+- **Target:** `awstypes.EndpointConfig`
+- **Similarity:** 0.22
+- **Dependents:** 0
+- **Priority Score:** 51307.8
+- **Functions:** 3/6 matched (target 8)
+- **Missing functions:** `fmt`, `from_str`, `new`
+- **Types:** 5/7 matched (target 6)
+- **Missing types:** `Storer`, `Err`
+- **Tests:** 2/2 matched
+
+### 8. lib
+
+- **Target:** `awstypes.SigningName`
+- **Similarity:** 0.48
+- **Dependents:** 0
+- **Priority Score:** 10505.2
+- **Functions:** 3/3 matched (target 8)
+- **Missing functions:** _none_
+- **Types:** 1/2 matched
+- **Missing types:** `Storer`
+
+### 9. request_id
+
+- **Target:** `awstypes.RequestId`
+- **Similarity:** 0.79
+- **Dependents:** 0
+- **Priority Score:** 702.1
+- **Functions:** 6/6 matched (target 27)
+- **Missing functions:** _none_
+- **Types:** 1/1 matched (target 12)
+- **Missing types:** _none_
+- **Tests:** 4/4 matched
 
 ## Success Criteria
 
@@ -52,27 +139,4 @@ For each file to be considered "complete":
 - All tests ported
 - Documentation ported
 - port-lint header present
-
-## Next Commands
-
-```bash
-# Initialize task queue for systematic porting
-cd tools/ast_distance
-./ast_distance --init-tasks ../../tmp/aws-types/src rust ../../src/commonMain/kotlin/io/github/kotlinmania/awstypes kotlin tasks.json ../../AGENTS.md
-
-# Get next high-priority task
-./ast_distance --assign tasks.json <agent-id>
-```
-## Reexport / Wiring Modules
-
-These files match `reexport_modules` patterns in `.ast_distance_config.json`. They are filtered out of
-normal priority and missing-file ladders because they are wiring
-modules, not direct logic ports. Consult them for call-site routing;
-do not treat them as the next implementation target by default.
-
-### Missing
-
-| Source | Expected target | Deps | Source path | Expected path |
-|--------|-----------------|------|-------------|---------------|
-| `lib` | `Lib` | 0 | `lib.rs` | `Lib.kt` |
 
