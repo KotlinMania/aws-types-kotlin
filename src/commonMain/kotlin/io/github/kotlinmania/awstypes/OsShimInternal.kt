@@ -42,14 +42,9 @@ public class Env private constructor(
         public fun fromMap(map: Map<String, String>): Env = Env { map[it] }
 
         /**
-         * Create an [Env] from pairs of (key, value).
+         * Create an [Env] from key-value pairs.
          */
-        public fun fromSlice(vararg vars: Pair<String, String>): Env = fromMap(vars.toMap())
-
-        /**
-         * Create an [Env] from a list of pairs.
-         */
-        public fun fromList(vars: List<Pair<String, String>>): Env = fromMap(vars.toMap())
+        public fun fromSlice(vars: Map<String, String>): Env = fromMap(vars)
 
         /**
          * Sets a custom provider for [real] during tests.
@@ -121,18 +116,10 @@ public class Fs private constructor(
         }
 
         /**
-         * Create [Fs] from pairs of (path, content string).
+         * Create [Fs] from a map of (path, content string).
          */
-        public fun fromSlice(vararg files: Pair<String, String>): Fs {
-            val map = files.associate { (k, v) -> normalizePath(k) to v.encodeToByteArray() }
-            return fromMap(map)
-        }
-
-        /**
-         * Create [Fs] from a list of pairs of (path, content string).
-         */
-        public fun fromList(files: List<Pair<String, String>>): Fs {
-            val map = files.associate { (k, v) -> normalizePath(k) to v.encodeToByteArray() }
+        public fun fromSlice(files: Map<String, String>): Fs {
+            val map = files.entries.associate { (k, v) -> normalizePath(k) to v.encodeToByteArray() }
             return fromMap(map)
         }
 

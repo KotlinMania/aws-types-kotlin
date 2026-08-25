@@ -224,7 +224,7 @@ public data class SdkConfig(
     public val sleepImpl: SharedAsyncSleep? = null,
     public val timeSource: SharedTimeSource? = null,
     public val timeoutConfig: TimeoutConfig? = null,
-    public val stalledStreamProtectionConfig: StalledStreamProtectionConfig? = null,
+    public val stalledStreamProtection: StalledStreamProtectionConfig? = null,
     public val httpClient: SharedHttpClient? = null,
     public val useFips: Boolean? = null,
     public val useDualStack: Boolean? = null,
@@ -236,50 +236,6 @@ public data class SdkConfig(
     public val requestChecksumCalculation: RequestChecksumCalculation? = null,
     public val responseChecksumValidation: ResponseChecksumValidation? = null,
 ) {
-    public fun region(): Region? = region
-
-    public fun accountIdEndpointMode(): AccountIdEndpointMode? = accountIdEndpointMode
-
-    public fun authSchemePreference(): AuthSchemePreference? = authSchemePreference
-
-    public fun endpointUrl(): String? = endpointUrl
-
-    public fun retryConfig(): RetryConfig? = retryConfig
-
-    public fun timeoutConfig(): TimeoutConfig? = timeoutConfig
-
-    public fun sleepImpl(): SharedAsyncSleep? = sleepImpl
-
-    public fun identityCache(): SharedIdentityCache? = identityCache
-
-    public fun credentialsProvider(): SharedCredentialsProvider? = credentialsProvider
-
-    public fun tokenProvider(): SharedTokenProvider? = tokenProvider
-
-    public fun timeSource(): SharedTimeSource? = timeSource
-
-    public fun appName(): AppName? = appName
-
-    public fun httpClient(): SharedHttpClient? = httpClient
-
-    public fun useFips(): Boolean? = useFips
-
-    public fun useDualStack(): Boolean? = useDualStack
-
-    public fun disableRequestCompression(): Boolean? = disableRequestCompression
-
-    public fun requestChecksumCalculation(): RequestChecksumCalculation? = requestChecksumCalculation
-
-    public fun responseChecksumValidation(): ResponseChecksumValidation? = responseChecksumValidation
-
-    public fun requestMinCompressionSizeBytes(): Long? = requestMinCompressionSizeBytes
-
-    public fun stalledStreamProtection(): StalledStreamProtectionConfig? = stalledStreamProtectionConfig
-
-    public fun behaviorVersion(): BehaviorVersion? = behaviorVersion
-
-    public fun serviceConfig(): LoadServiceConfig? = serviceConfig
-
     public fun getOrigin(setting: String): Origin = configOrigins[setting] ?: Origin.UNKNOWN
 
     public fun toBuilder(): Builder = intoBuilder()
@@ -298,7 +254,7 @@ public data class SdkConfig(
             sleepImpl(this@SdkConfig.sleepImpl)
             timeSource(this@SdkConfig.timeSource)
             timeoutConfig(this@SdkConfig.timeoutConfig)
-            stalledStreamProtection(this@SdkConfig.stalledStreamProtectionConfig)
+            stalledStreamProtection(this@SdkConfig.stalledStreamProtection)
             httpClient(this@SdkConfig.httpClient)
             useFips(this@SdkConfig.useFips)
             useDualStack(this@SdkConfig.useDualStack)
@@ -444,7 +400,7 @@ public data class SdkConfig(
                 sleepImpl = sleepImpl,
                 timeSource = timeSource,
                 timeoutConfig = timeoutConfig,
-                stalledStreamProtectionConfig = stalledStreamProtectionConfig,
+                stalledStreamProtection = stalledStreamProtectionConfig,
                 httpClient = httpClient,
                 useFips = useFips,
                 useDualStack = useDualStack,
