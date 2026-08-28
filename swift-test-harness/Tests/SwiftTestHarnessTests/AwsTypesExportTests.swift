@@ -2,8 +2,12 @@
 import Testing
 import AwsTypes
 
-@Test func testSwiftModuleLoads() {
-    #expect(true)
+@Suite("AwsTypes Swift Export Tests")
+struct AwsTypesExportTests {
+    @Test("AwsTypes swift module imported cleanly")
+    func testSwiftModuleLoads() throws {
+        #expect(Bool(true), "AwsTypes swift module imported cleanly")
+    }
 }
 #elseif canImport(XCTest)
 import XCTest
