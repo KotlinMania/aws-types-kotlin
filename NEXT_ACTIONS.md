@@ -5,13 +5,13 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/9 (100.0%)
-- **Function parity:** 100/117 matched (target 232) — 85.5%
+- **Function parity:** 100/117 matched (target 208) — 85.5%
 - **Class/type parity:** 21/31 matched (target 63) — 67.7%
-- **Combined symbol parity:** 121/148 matched (target 295) — 81.8%
-- **Average inline-code cosine:** 0.45 (function body across 9 matched files)
+- **Combined symbol parity:** 121/148 matched (target 271) — 81.8%
+- **Average inline-code cosine:** 0.43 (function body across 9 matched files)
 - **Average documentation cosine:** 0.65 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
-- **Critical Issues:** 7 files with <0.60 function similarity
+- **Critical Issues:** 8 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
@@ -65,10 +65,10 @@ Every matched file is listed below with function and type symbol parity.
 ### 4. sdk_config
 
 - **Target:** `awstypes.SdkConfig`
-- **Similarity:** 0.74
+- **Similarity:** 0.51
 - **Dependents:** 1
-- **Priority Score:** 1005202.6
-- **Functions:** 50/50 matched (target 95)
+- **Priority Score:** 1005204.9
+- **Functions:** 50/50 matched (target 73)
 - **Missing functions:** _none_
 - **Types:** 2/2 matched (target 19)
 - **Missing types:** _none_
@@ -90,7 +90,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Similarity:** 0.36
 - **Dependents:** 0
 - **Priority Score:** 51706.4
-- **Functions:** 10/13 matched (target 23)
+- **Functions:** 10/13 matched (target 21)
 - **Missing functions:** `default`, `from_raw_map`, `from`
 - **Types:** 2/4 matched
 - **Missing types:** `Inner`, `Fake`
