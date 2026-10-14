@@ -1,6 +1,9 @@
 // port-lint: source sdk_config.rs
 package io.github.kotlinmania.awstypes
 
+import io.github.kotlinmania.awscredentialtypes.provider.SharedCredentialsProvider
+import io.github.kotlinmania.awscredentialtypes.provider.token.SharedTokenProvider
+
 /*
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
@@ -185,28 +188,6 @@ public interface ResolveCachedIdentity
 public class SharedIdentityCache(
     public val cache: ResolveCachedIdentity,
 ) : ResolveCachedIdentity
-
-/**
- * Credentials provider interface.
- */
-public fun interface ProvideCredentials {
-    public suspend fun provideCredentials(): Any?
-}
-
-public class SharedCredentialsProvider(
-    private val delegate: ProvideCredentials,
-) : ProvideCredentials by delegate
-
-/**
- * Bearer auth token provider interface.
- */
-public fun interface ProvideToken {
-    public suspend fun provideToken(): Any?
-}
-
-public class SharedTokenProvider(
-    private val delegate: ProvideToken,
-) : ProvideToken by delegate
 
 /**
  * AWS Shared Configuration representation agnostic of a specific service.

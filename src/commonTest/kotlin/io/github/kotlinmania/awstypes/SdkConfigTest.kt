@@ -6,6 +6,10 @@ package io.github.kotlinmania.awstypes
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import io.github.kotlinmania.awscredentialtypes.Credentials
+import io.github.kotlinmania.awscredentialtypes.Token
+import io.github.kotlinmania.awscredentialtypes.provider.SharedCredentialsProvider
+import io.github.kotlinmania.awscredentialtypes.provider.token.SharedTokenProvider
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -128,10 +132,10 @@ class SdkConfigTest {
         val sharedTime = SharedTimeSource(timeSource)
         assertEquals(123456789L, sharedTime.nowEpochMillis())
 
-        val creds = ProvideCredentials { "dummy-creds" }
+        val creds = Credentials.fromKeys("dummy-key", "dummy-secret", "dummy-token")
         val sharedCreds = SharedCredentialsProvider(creds)
 
-        val token = ProvideToken { "dummy-token" }
+        val token = Token.new("dummy-token", null)
         val sharedToken = SharedTokenProvider(token)
 
         val config =
