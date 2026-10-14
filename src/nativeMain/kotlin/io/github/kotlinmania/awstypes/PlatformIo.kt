@@ -8,19 +8,13 @@ package io.github.kotlinmania.awstypes
 
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.ExperimentalForeignApi
-import kotlinx.cinterop.addressOf
-import kotlinx.cinterop.convert
 import kotlinx.cinterop.toKString
-import kotlinx.cinterop.usePinned
+import platform.posix.EOF
 import platform.posix.FILE
-import platform.posix.SEEK_END
-import platform.posix.SEEK_SET
 import platform.posix.fclose
+import platform.posix.fgetc
 import platform.posix.fopen
-import platform.posix.fread
-import platform.posix.fseek
-import platform.posix.ftell
-import platform.posix.fwrite
+import platform.posix.fputc
 import platform.posix.getenv
 
 @OptIn(ExperimentalForeignApi::class)
@@ -33,17 +27,13 @@ internal actual fun platformReadFile(path: String): ByteArray {
         throw FsFileNotFoundException("File not found: $path")
     }
     try {
-        fseek(file, 0, SEEK_END)
-        val size = ftell(file)
-        fseek(file, 0, SEEK_SET)
-        if (size <= 0L) {
-            return ByteArray(0)
+        val bytes = ArrayList<Byte>()
+        while (true) {
+            val c = fgetc(file)
+            if (c == EOF) break
+            bytes.add(c.toByte())
         }
-        val bytes = ByteArray(size.toInt())
-        bytes.usePinned { pinned ->
-            fread(pinned.addressOf(0), 1.convert(), size.convert(), file)
-        }
-        return bytes
+        return bytes.toByteArray()
     } finally {
         fclose(file)
     }
@@ -56,9 +46,10 @@ internal actual fun platformWriteFile(path: String, contents: ByteArray) {
         throw FsFileNotFoundException("Cannot open file for writing: $path")
     }
     try {
-        if (contents.isNotEmpty()) {
-            contents.usePinned { pinned ->
-                fwrite(pinned.addressOf(0), 1.convert(), contents.size.convert(), file)
+        for (b in contents) {
+            val res = fputc(b.toInt() and 0xFF, file)
+            if (res == EOF) {
+                throw FsFileNotFoundException("Failed to write to file: $path")
             }
         }
     } finally {
