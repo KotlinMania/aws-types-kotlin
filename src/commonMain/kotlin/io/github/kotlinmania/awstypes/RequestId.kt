@@ -43,7 +43,7 @@ public class Headers(
     /**
      * Gets all header values matching [name] (case-insensitive).
      */
-    public fun getAll(name: String): List<String> = headers[name.lowercase()] ?: emptyList()
+    public fun getAll(name: String): List<String> = headers[name.lowercase()].orEmpty()
 
     /**
      * Appends a header value.
