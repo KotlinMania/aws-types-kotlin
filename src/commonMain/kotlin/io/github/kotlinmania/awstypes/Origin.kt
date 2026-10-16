@@ -132,12 +132,26 @@ internal sealed class Inner {
         val kind: Kind,
     ) : Inner()
 
-    // Unknown is like NaN. It's not equal to anything, not even itself.
-    internal class Unknown : Inner() {
-        override fun equals(other: Any?): Boolean = false
+    internal class Unknown : Inner()
 
-        override fun hashCode(): Int = 0
-    }
+    // Unknown is like NaN. It's not equal to anything, not even itself.
+    final override fun equals(other: Any?): Boolean =
+        when {
+            this is Imds && other is Imds -> true
+            this is Programmatic && other is Programmatic -> kind == other.kind
+            this is EnvironmentVariable && other is EnvironmentVariable -> kind == other.kind
+            this is ProfileFile && other is ProfileFile -> kind == other.kind
+            else -> false
+        }
+
+    final override fun hashCode(): Int =
+        when (this) {
+            is Imds -> 1
+            is Programmatic -> 31 * 2 + kind.hashCode()
+            is EnvironmentVariable -> 31 * 3 + kind.hashCode()
+            is ProfileFile -> 31 * 4 + kind.hashCode()
+            is Unknown -> 0
+        }
 
     private fun isUnknown(): Boolean = this is Unknown
 
