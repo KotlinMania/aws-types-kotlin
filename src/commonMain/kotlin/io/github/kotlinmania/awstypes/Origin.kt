@@ -19,23 +19,34 @@ public class Origin private constructor(
 ) {
     override fun toString(): String =
         when (inner) {
-            Inner.Imds -> "IMDS"
-            is Inner.ProfileFile ->
+            Inner.Imds -> {
+                "IMDS"
+            }
+
+            is Inner.ProfileFile -> {
                 when (inner.kind) {
                     Kind.Shared -> "shared profile file"
                     Kind.Service -> "service profile file"
                 }
-            is Inner.EnvironmentVariable ->
+            }
+
+            is Inner.EnvironmentVariable -> {
                 when (inner.kind) {
                     Kind.Shared -> "shared environment variable"
                     Kind.Service -> "service environment variable"
                 }
-            is Inner.Programmatic ->
+            }
+
+            is Inner.Programmatic -> {
                 when (inner.kind) {
                     Kind.Shared -> "shared client"
                     Kind.Service -> "service client"
                 }
-            is Inner.Unknown -> "unknown"
+            }
+
+            is Inner.Unknown -> {
+                "unknown"
+            }
         }
 
     /**
@@ -162,32 +173,50 @@ internal sealed class Inner {
 
         return when (this) {
             // IMDS is the lowest priority
-            Imds -> -1
+            Imds -> {
+                -1
+            }
+
             // ProfileFile is the second-lowest priority
-            is ProfileFile ->
+            is ProfileFile -> {
                 when (other) {
                     is Imds -> 1
                     is ProfileFile -> kind.compareTo(other.kind)
                     else -> -1
                 }
+            }
+
             // EnvironmentVariable is the second-highest priority
-            is EnvironmentVariable ->
+            is EnvironmentVariable -> {
                 when (other) {
                     is Imds, is ProfileFile -> 1
                     is EnvironmentVariable -> kind.compareTo(other.kind)
                     else -> -1
                 }
+            }
+
             // Programmatic is the highest priority
-            is Programmatic ->
+            is Programmatic -> {
                 when (other) {
-                    is Imds, is EnvironmentVariable, is ProfileFile -> 1
-                    is Programmatic -> kind.compareTo(other.kind)
-                    else ->
+                    is Imds, is EnvironmentVariable, is ProfileFile -> {
+                        1
+                    }
+
+                    is Programmatic -> {
+                        kind.compareTo(other.kind)
+                    }
+
+                    else -> {
                         error(
                             "When we have something higher than programmatic we can update this case.",
                         )
+                    }
                 }
-            is Unknown -> error("unreachable: filtered by isUnknown check above")
+            }
+
+            is Unknown -> {
+                error("unreachable: filtered by isUnknown check above")
+            }
         }
     }
 }
