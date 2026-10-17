@@ -792,6 +792,10 @@ kotlin {
         commonMain.dependencies {
             implementation(commonMainDependencyBundle)
         }
+        nativeMain.dependencies {
+            implementation(libs.km.io)
+            implementation(libs.libc.kotlin)
+        }
         commonTest.dependencies {
             implementation(kotlin("test"))
             commonTestDependencyBundle?.let { implementation(it) }

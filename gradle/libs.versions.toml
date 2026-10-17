@@ -45,7 +45,6 @@ aws-types-commonMain = [
   "collections-immutable",
   "aws-credential-types-kotlin",
   "http-kotlin",
-  "km-io",
   "libc-kotlin",
 ]
 
