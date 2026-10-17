@@ -10,6 +10,8 @@ ktlint = "14.2.0"
 kotlinxBenchmark = "0.5.0"
 awsCredentialTypes = "0.1.1"
 http = "0.1.3"
+kmIo = "0.1.5"
+libc = "0.1.9"
 ktlintEngine = "1.8.0"
 
 [plugins]
@@ -31,6 +33,8 @@ collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-im
 kotlinx-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "kotlinxBenchmark" }
 aws-credential-types-kotlin = { module = "io.github.kotlinmania:aws-credential-types-kotlin", version.ref = "awsCredentialTypes" }
 http-kotlin = { module = "io.github.kotlinmania:http-kotlin", version.ref = "http" }
+km-io = { module = "io.github.kotlinmania:km-io", version.ref = "kmIo" }
+libc-kotlin = { module = "io.github.kotlinmania:libc-kotlin", version.ref = "libc" }
 
 [bundles]
 aws-types-commonMain = [
@@ -41,6 +45,8 @@ aws-types-commonMain = [
   "collections-immutable",
   "aws-credential-types-kotlin",
   "http-kotlin",
+  "km-io",
+  "libc-kotlin",
 ]
 
 aws-types-commonTest = [

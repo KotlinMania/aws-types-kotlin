@@ -6,53 +6,35 @@ package io.github.kotlinmania.awstypes
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.ExperimentalForeignApi
-import kotlinx.cinterop.toKString
-import platform.posix.EOF
-import platform.posix.FILE
-import platform.posix.fclose
-import platform.posix.fgetc
-import platform.posix.fopen
-import platform.posix.fputc
-import platform.posix.getenv
+import io.github.kotlinmania.io.buffered
+import io.github.kotlinmania.io.files.FileNotFoundException
+import io.github.kotlinmania.io.files.Path
+import io.github.kotlinmania.io.files.SystemFileSystem
+import io.github.kotlinmania.io.readByteArray
+import io.github.kotlinmania.libc.unix.getenv
 
-@OptIn(ExperimentalForeignApi::class)
-internal actual fun platformGetEnv(key: String): String? = getenv(key)?.toKString()
+internal actual fun platformGetEnv(key: String): String? = getenv(key)
 
-@OptIn(ExperimentalForeignApi::class)
 internal actual fun platformReadFile(path: String): ByteArray {
-    val file: CPointer<FILE>? = fopen(path, "rb")
-    if (file == null) {
+    val p = Path(path)
+    if (!SystemFileSystem.exists(p)) {
         throw FsFileNotFoundException("File not found: $path")
     }
-    try {
-        val bytes = ArrayList<Byte>()
-        while (true) {
-            val c = fgetc(file)
-            if (c == EOF) break
-            bytes.add(c.toByte())
-        }
-        return bytes.toByteArray()
-    } finally {
-        fclose(file)
+    return try {
+        SystemFileSystem.source(p).buffered().use { it.readByteArray() }
+    } catch (e: FileNotFoundException) {
+        throw FsFileNotFoundException("File not found: $path: ${e.message}")
+    } catch (e: Exception) {
+        throw FsFileNotFoundException("Cannot read file: $path: ${e.message}")
     }
 }
 
-@OptIn(ExperimentalForeignApi::class)
 internal actual fun platformWriteFile(path: String, contents: ByteArray) {
-    val file: CPointer<FILE>? = fopen(path, "wb")
-    if (file == null) {
-        throw FsFileNotFoundException("Cannot open file for writing: $path")
-    }
     try {
-        for (b in contents) {
-            val res = fputc(b.toInt() and 0xFF, file)
-            if (res == EOF) {
-                throw FsFileNotFoundException("Failed to write to file: $path")
-            }
-        }
-    } finally {
-        fclose(file)
+        val p = Path(path)
+        p.parent?.let { SystemFileSystem.createDirectories(it) }
+        SystemFileSystem.sink(p).buffered().use { it.write(contents) }
+    } catch (e: Exception) {
+        throw FsFileNotFoundException("Cannot write file: $path: ${e.message}")
     }
 }

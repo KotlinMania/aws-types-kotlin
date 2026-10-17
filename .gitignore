@@ -3870,3 +3870,5 @@ DerivedData/
 /kotlin-js-store/wasm/node_modules/.package-lock.json
 /gradle/npm/karma-webpack/package-lock.json
 /kotlin-js-store/wasm/package-lock.json
+node_modules/
+package-lock.json
