@@ -1613,3 +1613,23 @@ val fullTargetBuildTaskNames =
 tasks.named("build") {
     dependsOn(fullTargetBuildTaskNames)
 }
+
+tasks.register("classes") {
+    dependsOn(
+        "compileAndroidMain",
+        "jvmMainClasses",
+        "jsMainClasses",
+        "wasmJsMainClasses",
+        "wasmWasiMainClasses",
+    )
+}
+
+tasks.register("testClasses") {
+    dependsOn(
+        "compileAndroidHostTest",
+        "jvmTestClasses",
+        "jsTestClasses",
+        "wasmJsTestClasses",
+        "wasmWasiTestClasses",
+    )
+}
