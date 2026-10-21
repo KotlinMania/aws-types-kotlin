@@ -89,7 +89,7 @@ public class Error(
     public val kind: ErrorKind,
 ) : IllegalArgumentException("couldn't build a ServiceEnvConfigKey: $kind") {
     /** Formats this error matching upstream Display::fmt. */
-    public fun fmt(): String = message ?: ""
+    public fun fmt(): String = message.orEmpty()
 
     public companion object {
         /** Creates a new missing service ID error. */

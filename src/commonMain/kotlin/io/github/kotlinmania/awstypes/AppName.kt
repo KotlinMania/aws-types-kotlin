@@ -120,5 +120,5 @@ public class InvalidAppName(
         "The app name can only have alphanumeric characters, or any of '!' | '#' | '$' | '%' | '&' | '\\'' | '*' | '+' | '-' | '.' | '^' | '_' | '`' | '|' | '~'",
 ) : IllegalArgumentException(message) {
     /** Formats this error matching upstream `Display::fmt`. */
-    public fun fmt(): String = message ?: ""
+    public fun fmt(): String = message.orEmpty()
 }

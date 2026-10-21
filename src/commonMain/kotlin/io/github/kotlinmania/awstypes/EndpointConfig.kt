@@ -122,7 +122,7 @@ public class AccountIdEndpointModeParseError(
             "[\n    \"preferred\",\n    \"disabled\",\n    \"required\",\n]",
     ) {
     /** Formats this error matching upstream `Display::fmt`. */
-    public fun fmt(): String = message ?: ""
+    public fun fmt(): String = message.orEmpty()
 
     public companion object {
         /** Creates a new [AccountIdEndpointModeParseError]. */
