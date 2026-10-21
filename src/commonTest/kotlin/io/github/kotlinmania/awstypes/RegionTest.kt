@@ -12,6 +12,7 @@ class RegionTest {
 
         assertEquals("us-east-1", region.asString())
         assertEquals("us-east-1", region.asRef())
+        assertEquals("us-east-1", region.fmt())
         assertEquals("us-east-1", region.toString())
         assertEquals(region, Region.fromStatic("us-east-1"))
         assertNotEquals(region, Region.new("us-west-2"))
@@ -38,8 +39,16 @@ class RegionTest {
             SigningRegionSet.fromIterable(listOf("us-east-1", "us-west-2", "eu-central-1")).asString(),
         )
         assertEquals(
+            "us-east-1,us-west-2,eu-central-1",
+            SigningRegionSet.fromIter(listOf("us-east-1", "us-west-2", "eu-central-1")).asString(),
+        )
+        assertEquals(
             "us-east-1,us-west-2",
             SigningRegionSet.fromIterator(listOf("us-east-1", "us-west-2").iterator()).asString(),
+        )
+        assertEquals(
+            "us-east-1,us-west-2",
+            SigningRegionSet.fromIter(listOf("us-east-1", "us-west-2").iterator()).asString(),
         )
         assertEquals("", SigningRegionSet.fromIterable(emptyList()).asString())
     }

@@ -5,9 +5,9 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/10 (90.0%)
-- **Function parity:** 112/158 matched (target 205) — 70.9%
-- **Class/type parity:** 23/31 matched (target 65) — 74.2%
-- **Combined symbol parity:** 135/189 matched (target 270) — 71.4%
+- **Function parity:** 114/158 matched (target 208) — 72.2%
+- **Class/type parity:** 24/31 matched (target 66) — 77.4%
+- **Combined symbol parity:** 138/189 matched (target 274) — 73.0%
 - **Average inline-code cosine:** 0.10 (function body across 9 matched files)
 - **Average documentation cosine:** 0.58 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
@@ -69,11 +69,11 @@ Every matched file is listed below with function and type symbol parity.
 - **Target:** `awstypes.Region`
 - **Similarity:** 0.16
 - **Dependents:** 1
-- **Priority Score:** 1031608.4
-- **Functions:** 10/12 matched (target 27)
-- **Missing functions:** `fmt`, `from_iter`
-- **Types:** 3/4 matched
-- **Missing types:** `Storer`
+- **Priority Score:** 1001608.4
+- **Functions:** 12/12 matched (target 30)
+- **Missing functions:** _none_
+- **Types:** 4/4 matched (target 5)
+- **Missing types:** _none_
 
 ### 5. service_config
 
