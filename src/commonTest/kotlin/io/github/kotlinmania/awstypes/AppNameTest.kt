@@ -20,11 +20,16 @@ class AppNameTest {
         val valid = AppName.new("asdf1234ASDF!#$%&'*+-.^_`|~")
         assertEquals("asdf1234ASDF!#$%&'*+-.^_`|~", valid.asString())
         assertEquals("asdf1234ASDF!#$%&'*+-.^_`|~", valid.asRef())
+        assertEquals("asdf1234ASDF!#$%&'*+-.^_`|~", valid.fmt())
         assertEquals("asdf1234ASDF!#$%&'*+-.^_`|~", valid.toString())
+        assertTrue(AppName.validCharacter('a'))
+        assertTrue(AppName.validCharacter('!'))
+        assertFalse(AppName.validCharacter(' '))
 
-        assertFailsWith<InvalidAppName> {
+        val err = assertFailsWith<InvalidAppName> {
             AppName.new("foo bar")
         }
+        assertTrue(err.fmt().contains("The app name can only have alphanumeric characters"))
         assertFailsWith<InvalidAppName> {
             AppName.new("🚀")
         }

@@ -5,11 +5,11 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/10 (90.0%)
-- **Function parity:** 114/158 matched (target 208) — 72.2%
-- **Class/type parity:** 24/31 matched (target 66) — 77.4%
-- **Combined symbol parity:** 138/189 matched (target 274) — 73.0%
+- **Function parity:** 117/158 matched (target 211) — 74.1%
+- **Class/type parity:** 25/31 matched (target 67) — 80.6%
+- **Combined symbol parity:** 142/189 matched (target 278) — 75.1%
 - **Average inline-code cosine:** 0.10 (function body across 9 matched files)
-- **Average documentation cosine:** 0.58 (doc text across 9 matched files)
+- **Average documentation cosine:** 0.57 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
 - **Critical Issues:** 9 files with <0.60 function similarity
 - **Needs Review:** 0 files with 0.60-0.84 function similarity
@@ -40,19 +40,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/2 matched (target 19)
 - **Missing types:** _none_
 
-### 2. app_name
-
-- **Target:** `awstypes.AppName`
-- **Similarity:** 0.04
-- **Dependents:** 1
-- **Priority Score:** 1041009.6
-- **Functions:** 4/7 matched (target 13)
-- **Missing functions:** `fmt`, `valid_character`, `fmt`
-- **Types:** 2/3 matched
-- **Missing types:** `Storer`
-- **Tests:** 2/2 matched
-
-### 3. origin
+### 2. origin
 
 - **Target:** `awstypes.Origin`
 - **Similarity:** 0.13
@@ -64,7 +52,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 4/4 matched
 
-### 4. region
+### 3. region
 
 - **Target:** `awstypes.Region`
 - **Similarity:** 0.16
@@ -74,6 +62,18 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 4/4 matched (target 5)
 - **Missing types:** _none_
+
+### 4. app_name
+
+- **Target:** `awstypes.AppName`
+- **Similarity:** 0.06
+- **Dependents:** 1
+- **Priority Score:** 1001009.4
+- **Functions:** 7/7 matched (target 16)
+- **Missing functions:** _none_
+- **Types:** 3/3 matched (target 4)
+- **Missing types:** _none_
+- **Tests:** 2/2 matched
 
 ### 5. service_config
 
