@@ -55,6 +55,9 @@ public enum class OsFamily {
                 "android" -> Android
                 else -> Other
             }
+
+        /** Parses an OS family from a string representation matching upstream `From<&str>`. */
+        public fun from(s: String): OsFamily = fromString(s)
     }
 }
 

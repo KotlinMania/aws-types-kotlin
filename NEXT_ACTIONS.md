@@ -5,9 +5,9 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 10/10 (100.0%)
-- **Function parity:** 114/162 matched (target 212) — 70.4%
+- **Function parity:** 115/162 matched (target 213) — 71.0%
 - **Class/type parity:** 24/33 matched (target 67) — 72.7%
-- **Combined symbol parity:** 138/195 matched (target 279) — 70.8%
+- **Combined symbol parity:** 139/195 matched (target 280) — 71.3%
 - **Average inline-code cosine:** 0.11 (function body across 10 matched files)
 - **Average documentation cosine:** 0.59 (doc text across 10 matched files)
 - **Cheat-zeroed Files:** 0
@@ -121,19 +121,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/2 matched
 - **Missing types:** `Storer`
 
-### 9. build_metadata
-
-- **Target:** `awstypes.BuildMetadataTest`
-- **Similarity:** 0.05
-- **Dependents:** 0
-- **Priority Score:** 10509.5
-- **Functions:** 2/3 matched (target 4)
-- **Missing functions:** `from`
-- **Types:** 2/2 matched (target 3)
-- **Missing types:** _none_
-- **Tests:** 1/1 matched
-
-### 10. request_id
+### 9. request_id
 
 - **Target:** `awstypes.RequestId`
 - **Similarity:** 0.29
@@ -144,6 +132,18 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/1 matched (target 12)
 - **Missing types:** _none_
 - **Tests:** 4/4 matched
+
+### 10. build_metadata
+
+- **Target:** `awstypes.BuildMetadataTest`
+- **Similarity:** 0.06
+- **Dependents:** 0
+- **Priority Score:** 509.4
+- **Functions:** 3/3 matched (target 5)
+- **Missing functions:** _none_
+- **Types:** 2/2 matched (target 3)
+- **Missing types:** _none_
+- **Tests:** 1/1 matched
 
 ## Success Criteria
 

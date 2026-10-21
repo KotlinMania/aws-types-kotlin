@@ -24,5 +24,12 @@ class BuildMetadataTest {
         assertEquals(OsFamily.Linux, OsFamily.fromString("linux"))
         assertEquals(OsFamily.Android, OsFamily.fromString("android"))
         assertEquals(OsFamily.Other, OsFamily.fromString("plan9"))
+
+        assertEquals(OsFamily.Windows, OsFamily.from("windows"))
+        assertEquals(OsFamily.Macos, OsFamily.from("macos"))
+        assertEquals(OsFamily.Ios, OsFamily.from("ios"))
+        assertEquals(OsFamily.Linux, OsFamily.from("linux"))
+        assertEquals(OsFamily.Android, OsFamily.from("android"))
+        assertEquals(OsFamily.Other, OsFamily.from("unknown"))
     }
 }
