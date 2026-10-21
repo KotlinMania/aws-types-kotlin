@@ -1,4 +1,3 @@
-// port-lint: source lib.rs
 package io.github.kotlinmania.awstypes
 
 /*
@@ -14,6 +13,9 @@ package io.github.kotlinmania.awstypes
 public class SigningName private constructor(
     private val value: String,
 ) {
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<Self>`. */
+    public interface Storer
+
     /** Returns the string form of this signing name. */
     public fun asString(): String = value
 
@@ -32,5 +34,8 @@ public class SigningName private constructor(
 
         /** Creates a [SigningName] from a string. */
         public fun from(name: String): SigningName = SigningName(name)
+
+        /** Creates a [SigningName] from a static string, matching `From<&'static str>`. */
+        public fun from(name: CharSequence): SigningName = fromStatic(name.toString())
     }
 }

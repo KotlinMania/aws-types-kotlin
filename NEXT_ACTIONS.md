@@ -4,14 +4,14 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 10/10 (100.0%)
-- **Function parity:** 115/162 matched (target 213) — 71.0%
-- **Class/type parity:** 24/33 matched (target 67) — 72.7%
-- **Combined symbol parity:** 139/195 matched (target 280) — 71.3%
-- **Average inline-code cosine:** 0.11 (function body across 10 matched files)
-- **Average documentation cosine:** 0.59 (doc text across 10 matched files)
+- **Files Present:** 9/10 (90.0%)
+- **Function parity:** 112/158 matched (target 205) — 70.9%
+- **Class/type parity:** 23/31 matched (target 65) — 74.2%
+- **Combined symbol parity:** 135/189 matched (target 270) — 71.4%
+- **Average inline-code cosine:** 0.10 (function body across 9 matched files)
+- **Average documentation cosine:** 0.58 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
-- **Critical Issues:** 10 files with <0.60 function similarity
+- **Critical Issues:** 9 files with <0.60 function similarity
 - **Needs Review:** 0 files with 0.60-0.84 function similarity
 - **Excellent:** 0 files with >=0.85 function similarity
 
@@ -110,18 +110,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** `Storer`, `Err`
 - **Tests:** 2/2 matched
 
-### 8. lib
-
-- **Target:** `awstypes.SigningName`
-- **Similarity:** 0.19
-- **Dependents:** 0
-- **Priority Score:** 20608.1
-- **Functions:** 3/4 matched (target 8)
-- **Missing functions:** `from`
-- **Types:** 1/2 matched
-- **Missing types:** `Storer`
-
-### 9. request_id
+### 8. request_id
 
 - **Target:** `awstypes.RequestId`
 - **Similarity:** 0.29
@@ -133,7 +122,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 4/4 matched
 
-### 10. build_metadata
+### 9. build_metadata
 
 - **Target:** `awstypes.BuildMetadataTest`
 - **Similarity:** 0.06
@@ -153,4 +142,17 @@ For each file to be considered "complete":
 - All tests ported
 - Documentation ported
 - port-lint header present
+
+## Reexport / Wiring Modules
+
+These files match `reexport_modules` patterns in `.ast_distance_config.json`. They are filtered out of
+normal priority and missing-file ladders because they are wiring
+modules, not direct logic ports. Consult them for call-site routing;
+do not treat them as the next implementation target by default.
+
+### Missing
+
+| Source | Expected target | Deps | Source path | Expected path |
+|--------|-----------------|------|-------------|---------------|
+| `lib` | `Lib` | 0 | `lib.rs` | `Lib.kt` |
 
