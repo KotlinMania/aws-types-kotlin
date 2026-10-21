@@ -20,6 +20,12 @@ package io.github.kotlinmania.awstypes
 public class Region private constructor(
     private val value: String,
 ) {
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<Region>`. */
+    public interface Storer
+
+    /** Formats this region matching upstream `Display::fmt`. */
+    public fun fmt(): String = value
+
     /** Returns the string form of this region. */
     public fun asString(): String = value
 
@@ -45,6 +51,9 @@ public class Region private constructor(
 public class SigningRegion private constructor(
     private val value: String,
 ) {
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<Self>`. */
+    public interface Storer
+
     /** Returns the string form of this signing region. */
     public fun asString(): String = value
 
@@ -77,6 +86,9 @@ public class SigningRegion private constructor(
 public class SigningRegionSet private constructor(
     private val value: String,
 ) {
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<Self>`. */
+    public interface Storer
+
     /** Returns the string form of this signing region set. */
     public fun asString(): String = value
 
@@ -99,6 +111,12 @@ public class SigningRegionSet private constructor(
         /** Creates a [SigningRegionSet] by joining regions with commas. */
         public fun fromIterable(regions: Iterable<String>): SigningRegionSet =
             fromIterator(regions.iterator())
+
+        /** Creates a [SigningRegionSet] from an iterable collection matching upstream iterator conversion. */
+        public fun fromIter(regions: Iterable<String>): SigningRegionSet = fromIterable(regions)
+
+        /** Creates a [SigningRegionSet] from an iterator matching upstream iterator conversion. */
+        public fun fromIter(regions: Iterator<String>): SigningRegionSet = fromIterator(regions)
 
         /** Creates a [SigningRegionSet] by joining regions from an iterator with commas. */
         public fun fromIterator(regions: Iterator<String>): SigningRegionSet {

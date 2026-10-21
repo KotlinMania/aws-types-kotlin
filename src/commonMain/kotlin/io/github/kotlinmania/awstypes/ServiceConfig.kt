@@ -41,12 +41,12 @@ public data class ServiceConfigKey(
         /**
          * Build the [ServiceConfigKey].
          *
-         * Throws [ServiceConfigKeyError] if any of the required fields are missing.
+         * Throws [Error] if any of the required fields are missing.
          */
         public fun build(): ServiceConfigKey {
-            val sId = serviceId ?: throw ServiceConfigKeyError("couldn't build a ServiceEnvConfigKey: missing required service-id")
-            val prof = profile ?: throw ServiceConfigKeyError("couldn't build a ServiceEnvConfigKey: missing required active profile name")
-            val e = env ?: throw ServiceConfigKeyError("couldn't build a ServiceEnvConfigKey: missing required environment variable name")
+            val sId = serviceId ?: throw Error.missingServiceId()
+            val prof = profile ?: throw Error.missingProfile()
+            val e = env ?: throw Error.missingEnv()
             return ServiceConfigKey(serviceId = sId, profile = prof, env = e)
         }
     }
@@ -57,12 +57,45 @@ public data class ServiceConfigKey(
     }
 }
 
-/**
- * Error type for [ServiceConfigKey.Builder].
- */
-public class ServiceConfigKeyError(
-    message: String,
-) : IllegalArgumentException(message)
+/** Error kinds for building a service configuration key. */
+public enum class ErrorKind {
+    MissingServiceId,
+    MissingProfile,
+    MissingEnv,
+    ;
+
+    /** Formats this error kind matching upstream Display::fmt. */
+    public fun fmt(): String =
+        when (this) {
+            MissingServiceId -> "missing required service-id"
+            MissingProfile -> "missing required active profile name"
+            MissingEnv -> "missing required environment variable name"
+        }
+
+    override fun toString(): String = fmt()
+}
+
+/** Error type for [ServiceConfigKey.Builder]. */
+public class Error(
+    public val kind: ErrorKind,
+) : IllegalArgumentException("couldn't build a ServiceEnvConfigKey: $kind") {
+    /** Formats this error matching upstream Display::fmt. */
+    public fun fmt(): String = message.orEmpty()
+
+    public companion object {
+        /** Creates a new missing service ID error. */
+        public fun missingServiceId(): Error = Error(ErrorKind.MissingServiceId)
+
+        /** Creates a new missing profile key error. */
+        public fun missingProfile(): Error = Error(ErrorKind.MissingProfile)
+
+        /** Creates a new missing env key error. */
+        public fun missingEnv(): Error = Error(ErrorKind.MissingEnv)
+    }
+}
+
+/** Error type alias for backward compatibility. */
+public typealias ServiceConfigKeyError = Error
 
 /**
  * Implementers of this interface can provide service config defined in a user's environment.

@@ -17,6 +17,16 @@ class OsShimInternalTest {
         val env = Env.fromSlice(mapOf("FOO" to "BAR"))
         assertEquals("BAR", env.get("FOO"))
         assertNull(env.get("OTHER"))
+
+        val envDefault = Env.default()
+        assertEquals(null, envDefault.get("NON_EXISTENT_VAR_12345"))
+
+        val envFrom = Env.from(mapOf("FOO" to "BAR"))
+        assertEquals("BAR", envFrom.get("FOO"))
+
+        val envPairs = Env.fromSlice("A" to "1", "B" to "2")
+        assertEquals("1", envPairs.get("A"))
+        assertEquals("2", envPairs.get("B"))
     }
 
     @Test
@@ -53,6 +63,12 @@ class OsShimInternalTest {
         val fs = Fs.fromMap(mapOf("/path/to/file.txt" to "contents".encodeToByteArray()))
         assertEquals("contents", fs.readUtf8("/path/to/file.txt"))
         assertEquals("contents", fs.readUtf8("\\path\\to\\file.txt"))
+
+        val rawFs = Fs.fromRawMap(mapOf("/raw/file.txt" to "raw".encodeToByteArray()))
+        assertEquals("raw", rawFs.readUtf8("/raw/file.txt"))
+
+        val sliceFs = Fs.fromSlice("/slice.txt" to "hello")
+        assertEquals("hello", sliceFs.readUtf8("/slice.txt"))
     }
 
     @Test

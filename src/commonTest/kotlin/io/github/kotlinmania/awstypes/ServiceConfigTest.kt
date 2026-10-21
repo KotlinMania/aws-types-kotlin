@@ -28,29 +28,38 @@ class ServiceConfigTest {
 
     @Test
     fun testBuilderMissingFields() {
-        assertFailsWith<ServiceConfigKeyError> {
-            ServiceConfigKey
-                .builder()
-                .profile("dev")
-                .env("AWS_ENDPOINT_URL_S3")
-                .build()
-        }
+        val err1 =
+            assertFailsWith<Error> {
+                ServiceConfigKey
+                    .builder()
+                    .profile("dev")
+                    .env("AWS_ENDPOINT_URL_S3")
+                    .build()
+            }
+        assertEquals(ErrorKind.MissingServiceId, err1.kind)
+        assertEquals("couldn't build a ServiceEnvConfigKey: missing required service-id", err1.fmt())
 
-        assertFailsWith<ServiceConfigKeyError> {
-            ServiceConfigKey
-                .builder()
-                .serviceId("s3")
-                .env("AWS_ENDPOINT_URL_S3")
-                .build()
-        }
+        val err2 =
+            assertFailsWith<Error> {
+                ServiceConfigKey
+                    .builder()
+                    .serviceId("s3")
+                    .env("AWS_ENDPOINT_URL_S3")
+                    .build()
+            }
+        assertEquals(ErrorKind.MissingProfile, err2.kind)
+        assertEquals("couldn't build a ServiceEnvConfigKey: missing required active profile name", err2.fmt())
 
-        assertFailsWith<ServiceConfigKeyError> {
-            ServiceConfigKey
-                .builder()
-                .serviceId("s3")
-                .profile("dev")
-                .build()
-        }
+        val err3 =
+            assertFailsWith<Error> {
+                ServiceConfigKey
+                    .builder()
+                    .serviceId("s3")
+                    .profile("dev")
+                    .build()
+            }
+        assertEquals(ErrorKind.MissingEnv, err3.kind)
+        assertEquals("couldn't build a ServiceEnvConfigKey: missing required environment variable name", err3.fmt())
     }
 
     @Test

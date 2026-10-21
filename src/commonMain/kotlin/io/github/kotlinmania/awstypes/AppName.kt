@@ -24,6 +24,12 @@ import kotlin.concurrent.Volatile
 public class AppName private constructor(
     private val value: String,
 ) {
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<AppName>`. */
+    public interface Storer
+
+    /** Formats this app name matching upstream `Display::fmt`. */
+    public fun fmt(): String = value
+
     /** Returns the string form of this app name. */
     public fun asString(): String = value
 
@@ -40,7 +46,10 @@ public class AppName private constructor(
         @Volatile
         private var lenRecommendationWarnEmitted: Boolean = false
 
-        private fun isValidCharacter(c: Char): Boolean =
+        /**
+         * Validates whether a character is permissible in an app name.
+         */
+        public fun validCharacter(c: Char): Boolean =
             (c in 'a'..'z') ||
                 (c in 'A'..'Z') ||
                 (c in '0'..'9') ||
@@ -59,6 +68,8 @@ public class AppName private constructor(
                 c == '`' ||
                 c == '|' ||
                 c == '~'
+
+        private fun isValidCharacter(c: Char): Boolean = validCharacter(c)
 
         /**
          * Creates a new app name.
@@ -107,4 +118,7 @@ public class AppName private constructor(
 public class InvalidAppName(
     message: String =
         "The app name can only have alphanumeric characters, or any of '!' | '#' | '$' | '%' | '&' | '\\'' | '*' | '+' | '-' | '.' | '^' | '_' | '`' | '|' | '~'",
-) : IllegalArgumentException(message)
+) : IllegalArgumentException(message) {
+    /** Formats this error matching upstream `Display::fmt`. */
+    public fun fmt(): String = message.orEmpty()
+}

@@ -20,6 +20,15 @@ package io.github.kotlinmania.awstypes
 public class Env private constructor(
     private val provider: (String) -> String?,
 ) {
+    /** Internal representation matching upstream env::Inner. */
+    public sealed class Inner {
+        public data object Real : Inner()
+
+        public class Fake(
+            public val map: Map<String, String>,
+        ) : Inner()
+    }
+
     /**
      * Retrieve a value for the given key, or return null if not present.
      */
@@ -37,6 +46,11 @@ public class Env private constructor(
             }
 
         /**
+         * Create a default [Env] representing a real process environment.
+         */
+        public fun default(): Env = real()
+
+        /**
          * Create an [Env] from a map.
          */
         public fun fromMap(map: Map<String, String>): Env = Env { map[it] }
@@ -45,6 +59,16 @@ public class Env private constructor(
          * Create an [Env] from key-value pairs.
          */
         public fun fromSlice(vars: Map<String, String>): Env = fromMap(vars)
+
+        /**
+         * Create an [Env] from key-value pairs.
+         */
+        public fun fromSlice(vararg vars: Pair<String, String>): Env = fromMap(vars.toMap())
+
+        /**
+         * Create an [Env] from a map matching upstream Map conversion.
+         */
+        public fun from(hashMap: Map<String, String>): Env = fromMap(hashMap)
 
         /**
          * Sets a custom provider for [real] during tests.
@@ -64,6 +88,27 @@ public class Fs private constructor(
     private val reader: (String) -> ByteArray,
     private val writer: (String, ByteArray) -> Unit,
 ) {
+    /** Internal representation matching upstream fs::Inner. */
+    public sealed class Inner {
+        public data object Real : Inner()
+
+        public class Fake(
+            public val fake: Fs.Fake,
+        ) : Inner()
+    }
+
+    /** Fake filesystem variants matching upstream fs::Fake. */
+    public sealed class Fake {
+        public class MapFs(
+            public val fs: Map<String, ByteArray> = emptyMap(),
+        ) : Fake()
+
+        public class NamespacedFs(
+            public val realPath: String,
+            public val namespacedTo: String,
+        ) : Fake()
+    }
+
     /**
      * Read the entire contents of a file as a byte array.
      */
@@ -99,6 +144,11 @@ public class Fs private constructor(
             )
 
         /**
+         * Create a default [Fs] representing a real file system.
+         */
+        public fun default(): Fs = real()
+
+        /**
          * Create [Fs] from a map of file path to byte array.
          */
         public fun fromMap(data: Map<String, ByteArray>): Fs {
@@ -116,10 +166,23 @@ public class Fs private constructor(
         }
 
         /**
+         * Create [Fs] from a raw map of path to byte array.
+         */
+        public fun fromRawMap(fs: Map<String, ByteArray>): Fs = fromMap(fs)
+
+        /**
          * Create [Fs] from a map of (path, content string).
          */
         public fun fromSlice(files: Map<String, String>): Fs {
             val map = files.entries.associate { (k, v) -> normalizePath(k) to v.encodeToByteArray() }
+            return fromMap(map)
+        }
+
+        /**
+         * Create [Fs] from pairs of (path, content string).
+         */
+        public fun fromSlice(vararg files: Pair<String, String>): Fs {
+            val map = files.associate { (k, v) -> normalizePath(k) to v.encodeToByteArray() }
             return fromMap(map)
         }
 
