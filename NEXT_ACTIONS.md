@@ -5,9 +5,9 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/10 (90.0%)
-- **Function parity:** 132/158 matched (target 229) — 83.5%
-- **Class/type parity:** 29/31 matched (target 71) — 93.5%
-- **Combined symbol parity:** 161/189 matched (target 300) — 85.2%
+- **Function parity:** 136/158 matched (target 236) — 86.1%
+- **Class/type parity:** 31/31 matched (target 76) — 100.0%
+- **Combined symbol parity:** 167/189 matched (target 312) — 88.4%
 - **Average inline-code cosine:** 0.12 (function body across 9 matched files)
 - **Average documentation cosine:** 0.55 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
@@ -78,13 +78,13 @@ Every matched file is listed below with function and type symbol parity.
 ### 5. os_shim_internal
 
 - **Target:** `awstypes.OsShimInternal`
-- **Similarity:** 0.07
+- **Similarity:** 0.11
 - **Dependents:** 0
-- **Priority Score:** 62009.3
-- **Functions:** 12/16 matched (target 21)
-- **Missing functions:** `default`, `from_raw_map`, `default`, `from`
-- **Types:** 2/4 matched
-- **Missing types:** `Inner`, `Fake`
+- **Priority Score:** 2008.9
+- **Functions:** 16/16 matched (target 28)
+- **Missing functions:** _none_
+- **Types:** 4/4 matched (target 9)
+- **Missing types:** _none_
 - **Tests:** 3/3 matched
 
 ### 6. service_config
