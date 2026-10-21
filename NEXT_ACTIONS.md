@@ -5,11 +5,11 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/10 (90.0%)
-- **Function parity:** 117/158 matched (target 211) — 74.1%
-- **Class/type parity:** 25/31 matched (target 67) — 80.6%
-- **Combined symbol parity:** 142/189 matched (target 278) — 75.1%
-- **Average inline-code cosine:** 0.10 (function body across 9 matched files)
-- **Average documentation cosine:** 0.57 (doc text across 9 matched files)
+- **Function parity:** 121/158 matched (target 215) — 76.6%
+- **Class/type parity:** 27/31 matched (target 69) — 87.1%
+- **Combined symbol parity:** 148/189 matched (target 284) — 78.3%
+- **Average inline-code cosine:** 0.11 (function body across 9 matched files)
+- **Average documentation cosine:** 0.55 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
 - **Critical Issues:** 9 files with <0.60 function similarity
 - **Needs Review:** 0 files with 0.60-0.84 function similarity
@@ -101,13 +101,13 @@ Every matched file is listed below with function and type symbol parity.
 ### 7. endpoint_config
 
 - **Target:** `awstypes.EndpointConfig`
-- **Similarity:** 0.04
+- **Similarity:** 0.08
 - **Dependents:** 0
-- **Priority Score:** 61409.6
-- **Functions:** 3/7 matched (target 8)
-- **Missing functions:** `fmt`, `from_str`, `new`, `fmt`
-- **Types:** 5/7 matched (target 6)
-- **Missing types:** `Storer`, `Err`
+- **Priority Score:** 1409.2
+- **Functions:** 7/7 matched (target 12)
+- **Missing functions:** _none_
+- **Types:** 7/7 matched (target 8)
+- **Missing types:** _none_
 - **Tests:** 2/2 matched
 
 ### 8. request_id

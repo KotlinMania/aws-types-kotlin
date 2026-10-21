@@ -6,26 +6,39 @@ package io.github.kotlinmania.awstypes
  * SPDX-License-Identifier: Apache-2.0
  */
 
+public const val PREFERRED: String = "preferred"
+public const val DISABLED: String = "disabled"
+public const val REQUIRED: String = "required"
+
 /**
  * Parameter wrapper for [UseFips].
  */
 public data class UseFips(
     public val value: Boolean,
-)
+) {
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<UseFips>`. */
+    public interface Storer
+}
 
 /**
  * Parameter wrapper for [UseDualStack].
  */
 public data class UseDualStack(
     public val value: Boolean,
-)
+) {
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<UseDualStack>`. */
+    public interface Storer
+}
 
 /**
  * Parameter wrapper for [EndpointUrl].
  */
 public data class EndpointUrl(
     public val value: String,
-)
+) {
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<EndpointUrl>`. */
+    public interface Storer
+}
 
 /**
  * Setting to control the account ID-based routing behavior.
@@ -47,13 +60,19 @@ public enum class AccountIdEndpointMode {
     Required,
     ;
 
+    /** Storer marker type mirroring upstream `Storable::Storer = StoreReplace<Self>`. */
+    public interface Storer
+
     /** Returns the string representation of this mode. */
     public fun asString(): String =
         when (this) {
-            Preferred -> "preferred"
-            Disabled -> "disabled"
-            Required -> "required"
+            Preferred -> PREFERRED
+            Disabled -> DISABLED
+            Required -> REQUIRED
         }
+
+    /** Formats this mode matching upstream `Display::fmt`. */
+    public fun fmt(): String = asString()
 
     override fun toString(): String = asString()
 
@@ -70,11 +89,16 @@ public enum class AccountIdEndpointMode {
          */
         public fun fromString(modeStr: String): AccountIdEndpointMode =
             when {
-                modeStr.equals("preferred", ignoreCase = true) -> Preferred
-                modeStr.equals("disabled", ignoreCase = true) -> Disabled
-                modeStr.equals("required", ignoreCase = true) -> Required
-                else -> throw AccountIdEndpointModeParseError(modeStr)
+                modeStr.equals(PREFERRED, ignoreCase = true) -> Preferred
+                modeStr.equals(DISABLED, ignoreCase = true) -> Disabled
+                modeStr.equals(REQUIRED, ignoreCase = true) -> Required
+                else -> throw AccountIdEndpointModeParseError.new(modeStr)
             }
+
+        /**
+         * Parses a string into an [AccountIdEndpointMode] matching upstream string conversion.
+         */
+        public fun fromStr(modeStr: String): AccountIdEndpointMode = fromString(modeStr)
 
         /**
          * Parses a string into an [AccountIdEndpointMode], returning null if invalid.
@@ -96,4 +120,19 @@ public class AccountIdEndpointModeParseError(
 ) : IllegalArgumentException(
         "error parsing string `$modeString` as `AccountIdEndpointMode`, valid options are: " +
             "[\n    \"preferred\",\n    \"disabled\",\n    \"required\",\n]",
-    )
+    ) {
+    /** Formats this error matching upstream `Display::fmt`. */
+    public fun fmt(): String = message ?: ""
+
+    public companion object {
+        /** Creates a new [AccountIdEndpointModeParseError]. */
+        public fun new(modeString: String): AccountIdEndpointModeParseError =
+            AccountIdEndpointModeParseError(modeString)
+    }
+}
+
+/** Error alias for [AccountIdEndpointModeParseError] mirroring upstream `FromStr::Err`. */
+public typealias Err = AccountIdEndpointModeParseError
+
+/** Storer type alias for endpoint config types mirroring upstream `Storable::Storer`. */
+public typealias Storer = Any

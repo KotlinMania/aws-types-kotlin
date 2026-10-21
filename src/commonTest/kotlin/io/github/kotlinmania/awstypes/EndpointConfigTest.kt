@@ -19,12 +19,24 @@ class EndpointConfigTest {
             AccountIdEndpointMode.fromString("preferred"),
         )
         assertEquals(
+            AccountIdEndpointMode.Preferred,
+            AccountIdEndpointMode.fromStr("preferred"),
+        )
+        assertEquals(
             AccountIdEndpointMode.Disabled,
             AccountIdEndpointMode.fromString("disabled"),
         )
         assertEquals(
+            AccountIdEndpointMode.Disabled,
+            AccountIdEndpointMode.fromStr("disabled"),
+        )
+        assertEquals(
             AccountIdEndpointMode.Required,
             AccountIdEndpointMode.fromString("required"),
+        )
+        assertEquals(
+            AccountIdEndpointMode.Required,
+            AccountIdEndpointMode.fromStr("required"),
         )
         // Case-insensitivity check
         assertEquals(
@@ -42,6 +54,8 @@ class EndpointConfigTest {
         val expected =
             "error parsing string `invalid` as `AccountIdEndpointMode`, valid options are: [\n    \"preferred\",\n    \"disabled\",\n    \"required\",\n]"
         assertEquals(expected, err.message)
+        assertEquals(expected, err.fmt())
+        assertEquals(expected, AccountIdEndpointModeParseError.new("invalid").fmt())
         assertNull(AccountIdEndpointMode.tryFromString("invalid"))
     }
 
