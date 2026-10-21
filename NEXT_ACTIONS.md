@@ -5,11 +5,11 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/10 (90.0%)
-- **Function parity:** 124/158 matched (target 220) — 78.5%
-- **Class/type parity:** 27/31 matched (target 69) — 87.1%
-- **Combined symbol parity:** 151/189 matched (target 289) — 79.9%
-- **Average inline-code cosine:** 0.11 (function body across 9 matched files)
-- **Average documentation cosine:** 0.54 (doc text across 9 matched files)
+- **Function parity:** 132/158 matched (target 229) — 83.5%
+- **Class/type parity:** 29/31 matched (target 71) — 93.5%
+- **Combined symbol parity:** 161/189 matched (target 300) — 85.2%
+- **Average inline-code cosine:** 0.12 (function body across 9 matched files)
+- **Average documentation cosine:** 0.55 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
 - **Critical Issues:** 9 files with <0.60 function similarity
 - **Needs Review:** 0 files with 0.60-0.84 function similarity
@@ -75,18 +75,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 2/2 matched
 
-### 5. service_config
-
-- **Target:** `awstypes.ServiceConfig`
-- **Similarity:** 0.03
-- **Dependents:** 0
-- **Priority Score:** 101809.7
-- **Functions:** 5/13 matched (target 8)
-- **Missing functions:** `service_id`, `profile`, `env`, `fmt`, `fmt`, `missing_service_id`, `missing_profile`, `missing_env`
-- **Types:** 3/5 matched
-- **Missing types:** `ErrorKind`, `Error`
-
-### 6. os_shim_internal
+### 5. os_shim_internal
 
 - **Target:** `awstypes.OsShimInternal`
 - **Similarity:** 0.07
@@ -97,6 +86,17 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/4 matched
 - **Missing types:** `Inner`, `Fake`
 - **Tests:** 3/3 matched
+
+### 6. service_config
+
+- **Target:** `awstypes.ServiceConfig`
+- **Similarity:** 0.12
+- **Dependents:** 0
+- **Priority Score:** 1808.8
+- **Functions:** 13/13 matched (target 17)
+- **Missing functions:** _none_
+- **Types:** 5/5 matched (target 7)
+- **Missing types:** _none_
 
 ### 7. endpoint_config
 
