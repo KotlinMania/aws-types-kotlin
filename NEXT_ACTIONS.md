@@ -5,11 +5,11 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/10 (90.0%)
-- **Function parity:** 136/158 matched (target 236) — 86.1%
+- **Function parity:** 158/158 matched (target 258) — 100.0%
 - **Class/type parity:** 31/31 matched (target 76) — 100.0%
-- **Combined symbol parity:** 167/189 matched (target 312) — 88.4%
+- **Combined symbol parity:** 189/189 matched (target 334) — 100.0%
 - **Average inline-code cosine:** 0.12 (function body across 9 matched files)
-- **Average documentation cosine:** 0.55 (doc text across 9 matched files)
+- **Average documentation cosine:** 0.56 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
 - **Critical Issues:** 9 files with <0.60 function similarity
 - **Needs Review:** 0 files with 0.60-0.84 function similarity
@@ -32,11 +32,11 @@ Every matched file is listed below with function and type symbol parity.
 ### 1. sdk_config
 
 - **Target:** `awstypes.SdkConfig`
-- **Similarity:** 0.10
+- **Similarity:** 0.12
 - **Dependents:** 1
-- **Priority Score:** 1227409.0
-- **Functions:** 50/72 matched (target 73)
-- **Missing functions:** `region`, `account_id_endpoint_mode`, `auth_scheme_preference`, `endpoint_url`, `retry_config`, `timeout_config`, `sleep_impl`, `identity_cache`, `credentials_provider`, `token_provider`, `time_source`, `app_name`, `http_client`, `use_fips`, `use_dual_stack`, `disable_request_compression`, `request_checksum_calculation`, `response_checksum_validation`, `request_min_compression_size_bytes`, `stalled_stream_protection`, `behavior_version`, `service_config`
+- **Priority Score:** 1007408.8
+- **Functions:** 72/72 matched (target 95)
+- **Missing functions:** _none_
 - **Types:** 2/2 matched (target 19)
 - **Missing types:** _none_
 

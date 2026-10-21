@@ -217,6 +217,72 @@ public data class SdkConfig(
     public val requestChecksumCalculation: RequestChecksumCalculation? = null,
     public val responseChecksumValidation: ResponseChecksumValidation? = null,
 ) {
+    /** Configured region. */
+    public fun region(): Region? = region
+
+    /** Configured account ID endpoint mode. */
+    public fun accountIdEndpointMode(): AccountIdEndpointMode? = accountIdEndpointMode
+
+    /** Configured auth scheme preference. */
+    public fun authSchemePreference(): AuthSchemePreference? = authSchemePreference
+
+    /** Configured endpoint URL. */
+    public fun endpointUrl(): String? = endpointUrl
+
+    /** Configured retry config. */
+    public fun retryConfig(): RetryConfig? = retryConfig
+
+    /** Configured timeout config. */
+    public fun timeoutConfig(): TimeoutConfig? = timeoutConfig
+
+    /** Configured sleep implementation. */
+    public fun sleepImpl(): SharedAsyncSleep? = sleepImpl
+
+    /** Configured identity cache. */
+    public fun identityCache(): SharedIdentityCache? = identityCache
+
+    /** Configured credentials provider. */
+    public fun credentialsProvider(): SharedCredentialsProvider? = credentialsProvider
+
+    /** Configured bearer auth token provider. */
+    public fun tokenProvider(): SharedTokenProvider? = tokenProvider
+
+    /** Configured time source. */
+    public fun timeSource(): SharedTimeSource? = timeSource
+
+    /** Configured app name. */
+    public fun appName(): AppName? = appName
+
+    /** Configured HTTP client. */
+    public fun httpClient(): SharedHttpClient? = httpClient
+
+    /** Use FIPS endpoints. */
+    public fun useFips(): Boolean? = useFips
+
+    /** Use dual-stack endpoint. */
+    public fun useDualStack(): Boolean? = useDualStack
+
+    /** When true, request compression is disabled. */
+    public fun disableRequestCompression(): Boolean? = disableRequestCompression
+
+    /** Configured checksum request behavior. */
+    public fun requestChecksumCalculation(): RequestChecksumCalculation? = requestChecksumCalculation
+
+    /** Configured checksum response behavior. */
+    public fun responseChecksumValidation(): ResponseChecksumValidation? = responseChecksumValidation
+
+    /** Configured minimum request compression size. */
+    public fun requestMinCompressionSizeBytes(): Long? = requestMinCompressionSizeBytes
+
+    /** Configured stalled stream protection. */
+    public fun stalledStreamProtection(): StalledStreamProtectionConfig? = stalledStreamProtection
+
+    /** Behavior version configured for this client. */
+    public fun behaviorVersion(): BehaviorVersion? = behaviorVersion
+
+    /** Return the service config provider configured for this client. */
+    public fun serviceConfig(): LoadServiceConfig? = serviceConfig
+
     public fun getOrigin(setting: String): Origin = configOrigins[setting] ?: Origin.UNKNOWN
 
     public fun toBuilder(): Builder = intoBuilder()
