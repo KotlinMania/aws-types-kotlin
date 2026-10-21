@@ -5,11 +5,11 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/10 (90.0%)
-- **Function parity:** 121/158 matched (target 215) — 76.6%
+- **Function parity:** 124/158 matched (target 220) — 78.5%
 - **Class/type parity:** 27/31 matched (target 69) — 87.1%
-- **Combined symbol parity:** 148/189 matched (target 284) — 78.3%
+- **Combined symbol parity:** 151/189 matched (target 289) — 79.9%
 - **Average inline-code cosine:** 0.11 (function body across 9 matched files)
-- **Average documentation cosine:** 0.55 (doc text across 9 matched files)
+- **Average documentation cosine:** 0.54 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
 - **Critical Issues:** 9 files with <0.60 function similarity
 - **Needs Review:** 0 files with 0.60-0.84 function similarity
@@ -43,11 +43,11 @@ Every matched file is listed below with function and type symbol parity.
 ### 2. origin
 
 - **Target:** `awstypes.Origin`
-- **Similarity:** 0.13
+- **Similarity:** 0.12
 - **Dependents:** 1
-- **Priority Score:** 1032108.7
-- **Functions:** 15/18 matched (target 23)
-- **Missing functions:** `fmt`, `eq`, `partial_cmp`
+- **Priority Score:** 1002108.8
+- **Functions:** 18/18 matched (target 28)
+- **Missing functions:** _none_
 - **Types:** 3/3 matched (target 9)
 - **Missing types:** _none_
 - **Tests:** 4/4 matched

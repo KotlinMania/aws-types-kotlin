@@ -17,6 +17,15 @@ package io.github.kotlinmania.awstypes
 public class Origin private constructor(
     internal val inner: Inner,
 ) {
+    /** Formats this origin matching upstream `Display::fmt`. */
+    public fun fmt(): String = toString()
+
+    /** Compares equality matching upstream `PartialEq::eq`. */
+    public fun eq(other: Origin): Boolean = this == other
+
+    /** Compares partial ordering matching upstream partial comparison. */
+    public fun partialCmp(other: Origin): Int? = partialCompareTo(other)
+
     override fun toString(): String =
         when (inner) {
             Inner.Imds -> {
@@ -165,6 +174,10 @@ internal sealed class Inner {
         }
 
     private fun isUnknown(): Boolean = this is Unknown
+
+    internal fun eq(other: Inner): Boolean = this == other
+
+    internal fun partialCmp(other: Inner): Int? = partialCompareTo(other)
 
     internal fun partialCompareTo(other: Inner): Int? {
         if (this.isUnknown() || other.isUnknown()) {

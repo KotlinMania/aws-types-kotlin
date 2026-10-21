@@ -25,6 +25,8 @@ class OriginTest {
             val a = list[i]
             val b = list[i + 1]
             assertTrue(a < b)
+            assertTrue(a.partialCmp(b)!! < 0)
+            assertTrue(b.partialCmp(a)!! > 0)
         }
     }
 
@@ -63,6 +65,8 @@ class OriginTest {
 
     @Test
     fun testSelfEquality() {
+        assertEquals("IMDS", Origin.imds().fmt())
+        assertTrue(Origin.imds().eq(Origin.imds()))
         assertEquals(Origin.imds(), Origin.imds())
         assertEquals(Origin.sharedConfig(), Origin.sharedConfig())
         assertEquals(Origin.serviceConfig(), Origin.serviceConfig())
