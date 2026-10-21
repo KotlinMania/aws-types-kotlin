@@ -5,10 +5,10 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 9/10 (90.0%)
-- **Function parity:** 158/158 matched (target 258) — 100.0%
+- **Function parity:** 158/158 matched (target 256) — 100.0%
 - **Class/type parity:** 31/31 matched (target 76) — 100.0%
-- **Combined symbol parity:** 189/189 matched (target 334) — 100.0%
-- **Average inline-code cosine:** 0.12 (function body across 9 matched files)
+- **Combined symbol parity:** 189/189 matched (target 332) — 100.0%
+- **Average inline-code cosine:** 0.13 (function body across 9 matched files)
 - **Average documentation cosine:** 0.56 (doc text across 9 matched files)
 - **Cheat-zeroed Files:** 0
 - **Critical Issues:** 9 files with <0.60 function similarity
@@ -113,10 +113,10 @@ Every matched file is listed below with function and type symbol parity.
 ### 8. request_id
 
 - **Target:** `awstypes.RequestId`
-- **Similarity:** 0.29
+- **Similarity:** 0.35
 - **Dependents:** 0
-- **Priority Score:** 1107.1
-- **Functions:** 10/10 matched (target 27)
+- **Priority Score:** 1106.5
+- **Functions:** 10/10 matched (target 25)
 - **Missing functions:** _none_
 - **Types:** 1/1 matched (target 12)
 - **Missing types:** _none_

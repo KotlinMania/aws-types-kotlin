@@ -75,5 +75,11 @@ class RequestIdTest {
 
         val errServWith = SdkError.ServiceError("service error", withRequestId)
         assertEquals("some-request-id", errServWith.requestId())
+
+        val successResult: Result<HttpResponse<String>> = Result.success(withRequestId)
+        assertEquals("some-request-id", successResult.requestId())
+
+        val failureResult: Result<HttpResponse<String>> = Result.failure(Exception("failed"))
+        assertNull(failureResult.requestId())
     }
 }

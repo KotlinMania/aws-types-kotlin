@@ -83,7 +83,7 @@ public data class ErrorMetadata(
     public val message: String? = null,
     public val extra: Map<String, String> = emptyMap(),
 ) : RequestId {
-    override fun requestId(): String? = extra[AWS_REQUEST_ID]
+    override fun requestId(): String? = extra(AWS_REQUEST_ID)
 
     /**
      * Retrieves an extra metadata property.
@@ -117,35 +117,38 @@ public class HttpResponse<B>(
     public val headers: Headers = Headers(),
     public val body: B,
 ) : RequestId {
-    override fun requestId(): String? = headers.requestId()
+    public fun headers(): Headers = headers
+
+    override fun requestId(): String? = headers().requestId()
 }
 
 /**
  * Result error from an SDK operation.
  */
 public sealed class SdkError<out E, out R> : RequestId {
+    override fun requestId(): String? =
+        when (this) {
+            is ResponseError<*> -> (raw as? HttpResponse<*>)?.headers()?.requestId() ?: (raw as? Headers)?.requestId()
+            is ServiceError<*, *> -> (raw as? HttpResponse<*>)?.headers()?.requestId() ?: (raw as? Headers)?.requestId()
+            else -> null
+        }
+
     public data class ConstructionFailure(
         val causeException: Throwable,
     ) : SdkError<Nothing, Nothing>() {
         public val cause: Throwable get() = causeException
-
-        override fun requestId(): String? = null
     }
 
     public data class TimeoutError(
         val causeException: Throwable,
     ) : SdkError<Nothing, Nothing>() {
         public val cause: Throwable get() = causeException
-
-        override fun requestId(): String? = null
     }
 
     public data class DispatchFailure(
         val causeException: Throwable,
     ) : SdkError<Nothing, Nothing>() {
         public val cause: Throwable get() = causeException
-
-        override fun requestId(): String? = null
     }
 
     public data class ResponseError<R : RequestId>(
@@ -153,25 +156,30 @@ public sealed class SdkError<out E, out R> : RequestId {
         val raw: R,
     ) : SdkError<Nothing, R>() {
         public val message: String get() = reason
-
-        override fun requestId(): String? = raw.requestId()
     }
 
     public data class ServiceError<E, R : RequestId>(
         val err: E,
         val raw: R,
-    ) : SdkError<E, R>() {
-        override fun requestId(): String? = raw.requestId()
-    }
+    ) : SdkError<E, R>()
 }
+
+/**
+ * Returns the request ID from a [Result] where the value implements [RequestId].
+ */
+public fun <T : RequestId> Result<T>.requestId(): String? =
+    fold(
+        onSuccess = { ok -> ok.requestId() },
+        onFailure = { err -> (err as? RequestId)?.requestId() },
+    )
 
 /**
  * Applies a request ID to a generic error builder.
  */
 public fun applyRequestId(builder: ErrorMetadata.Builder, headers: Headers): ErrorMetadata.Builder {
-    val reqId = headers.requestId()
-    return if (reqId != null) {
-        builder.custom(AWS_REQUEST_ID, reqId)
+    val requestId = headers.requestId()
+    return if (requestId != null) {
+        builder.custom(AWS_REQUEST_ID, requestId)
     } else {
         builder
     }
