@@ -26,9 +26,10 @@ class AppNameTest {
         assertTrue(AppName.validCharacter('!'))
         assertFalse(AppName.validCharacter(' '))
 
-        val err = assertFailsWith<InvalidAppName> {
-            AppName.new("foo bar")
-        }
+        val err =
+            assertFailsWith<InvalidAppName> {
+                AppName.new("foo bar")
+            }
         assertTrue(err.fmt().contains("The app name can only have alphanumeric characters"))
         assertFailsWith<InvalidAppName> {
             AppName.new("🚀")

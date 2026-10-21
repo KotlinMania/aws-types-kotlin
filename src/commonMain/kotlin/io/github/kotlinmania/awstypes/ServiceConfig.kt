@@ -24,15 +24,6 @@ public data class ServiceConfigKey(
     public val profile: String,
     public val env: String,
 ) {
-    /** Get the service ID. */
-    public fun serviceId(): String = serviceId
-
-    /** Get the profile key. */
-    public fun profile(): String = profile
-
-    /** Get the environment key. */
-    public fun env(): String = env
-
     public class Builder {
         private var serviceId: String? = null
         private var profile: String? = null

@@ -23,7 +23,10 @@ public class Env private constructor(
     /** Internal representation matching upstream env::Inner. */
     public sealed class Inner {
         public data object Real : Inner()
-        public class Fake(public val map: Map<String, String>) : Inner()
+
+        public class Fake(
+            public val map: Map<String, String>,
+        ) : Inner()
     }
 
     /**
@@ -63,11 +66,6 @@ public class Env private constructor(
         public fun fromSlice(vararg vars: Pair<String, String>): Env = fromMap(vars.toMap())
 
         /**
-         * Create an [Env] from key-value pairs.
-         */
-        public fun fromSlice(vars: List<Pair<String, String>>): Env = fromMap(vars.toMap())
-
-        /**
          * Create an [Env] from a map matching upstream Map conversion.
          */
         public fun from(hashMap: Map<String, String>): Env = fromMap(hashMap)
@@ -93,13 +91,22 @@ public class Fs private constructor(
     /** Internal representation matching upstream fs::Inner. */
     public sealed class Inner {
         public data object Real : Inner()
-        public class Fake(public val fake: Fs.Fake) : Inner()
+
+        public class Fake(
+            public val fake: Fs.Fake,
+        ) : Inner()
     }
 
     /** Fake filesystem variants matching upstream fs::Fake. */
     public sealed class Fake {
-        public class MapFs(public val fs: MutableMap<String, ByteArray>) : Fake()
-        public class NamespacedFs(public val realPath: String, public val namespacedTo: String) : Fake()
+        public class MapFs(
+            public val fs: Map<String, ByteArray> = emptyMap(),
+        ) : Fake()
+
+        public class NamespacedFs(
+            public val realPath: String,
+            public val namespacedTo: String,
+        ) : Fake()
     }
 
     /**

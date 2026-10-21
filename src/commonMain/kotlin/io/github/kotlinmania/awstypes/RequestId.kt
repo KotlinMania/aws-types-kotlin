@@ -117,9 +117,7 @@ public class HttpResponse<B>(
     public val headers: Headers = Headers(),
     public val body: B,
 ) : RequestId {
-    public fun headers(): Headers = headers
-
-    override fun requestId(): String? = headers().requestId()
+    override fun requestId(): String? = headers.requestId()
 }
 
 /**
@@ -128,8 +126,8 @@ public class HttpResponse<B>(
 public sealed class SdkError<out E, out R> : RequestId {
     override fun requestId(): String? =
         when (this) {
-            is ResponseError<*> -> (raw as? HttpResponse<*>)?.headers()?.requestId() ?: (raw as? Headers)?.requestId()
-            is ServiceError<*, *> -> (raw as? HttpResponse<*>)?.headers()?.requestId() ?: (raw as? Headers)?.requestId()
+            is ResponseError<*> -> (raw as? HttpResponse<*>)?.headers?.requestId() ?: (raw as? Headers)?.requestId()
+            is ServiceError<*, *> -> (raw as? HttpResponse<*>)?.headers?.requestId() ?: (raw as? Headers)?.requestId()
             else -> null
         }
 
